@@ -1,74 +1,4 @@
 
-const AddForm =document.querySelector('#AddForm')
-const addTask =document.querySelector('#addTask')
-const showHide =document.querySelector('#showform')
-
-showHide.addEventListener('click',function(e){
-    this.textContent=='show form app'? this.textContent='HIde form' : this.textContent='show form app';
-    addTask.classList.toggle('d-none')
-})
-
-//function to check if todos have data or not
-
-//     if(getAllTodos()==[])
-//     {
-//         tr = createMyElement(tbody, 'tr' )
-//    noShowData = createMyElement(tr, 'td', "no show data")
-      
-// }
-
-
-// const taskHeads = ["id", "title", "content", "taskType", "dueDate", "status", "important"]
-
-
-//function to create any element in table 
-const createMyElement = (parent, element, text = false) =>{
-    myElement = document.createElement(element)
-    parent.appendChild(myElement)
-    if(text) myElement.textContent= text
-    return myElement
-}
-let tbody = document.querySelector('#todoAllData')  
-drawTodo= (i, newTodo) =>{
-     
-    let tr = createMyElement(tbody, 'tr')
-    createMyElement(tr, 'td', i)
-    createMyElement(tr, 'td', newTodo.id)
-    createMyElement(tr, 'td', newTodo.title)
-    createMyElement(tr, 'td', newTodo.content)
-    createMyElement(tr, 'td', newTodo.dueDate)
-    createMyElement(tr, 'td', newTodo.important)
-    createMyElement(tr, 'td', newTodo.status)
-    createMyElement(tr, 'td', newTodo.taskType)
-    td = createMyElement(tr, 'td' )
-    delbtn = createMyElement(td, 'button', "delete")
-    delbtn.addEventListener('click', function(e){
-        deleteTodo(newTodo.id)
-        // showAllCustomers()
-        // let tableRows = document.querySelectorAll('#customerData tr')
-        // console.log(tableRows[i-1], i-1)
-        // tableRows[i-1].remove()
-        tr.remove()
-        
-    })
-    td = createMyElement(tr, 'td' )
-    editbtn = createMyElement(td, 'button', "edit")
-    editbtn.addEventListener('click', function(e){
-        editTodo(newTodo.id)
-        deleteTodo(newTodo.id)
-        // showAllCustomers()
-        // let tableRows = document.querySelectorAll('#customerData tr')
-        // console.log(tableRows[i-1], i-1)
-        // tableRows[i-1].remove()
-        tr.remove()
-        showHide.textContent=='show form app'? showHide.textContent='HIde form' : showHide.textContent='show form app';
-    addTask.classList.toggle('d-none')
-        
-    })
-
-}
-
-
 // function get all todos
 const getAllTodos =()=>{
     let todos = JSON.parse(localStorage.getItem('todos')) || []
@@ -79,10 +9,95 @@ const getAllTodos =()=>{
 const saveTodos =(todos)=>{
     localStorage.setItem('todos',JSON.stringify(todos))
 }
+const createMyElement = (parent, element, text = false) =>{
+    myElement = document.createElement(element)
+    parent.appendChild(myElement)
+    if(text) myElement.textContent= text
+    return myElement
+}
+const AddForm =document.querySelector('#AddForm')
+const addTask =document.querySelector('#addTask')
+const showHide =document.querySelector('#showform')
+
+showHide.addEventListener('click',function(e){
+    this.textContent=='show form app'? this.textContent='HIde form' : this.textContent='show form app';
+    addTask.classList.toggle('d-none')
+})
+t1=0
+t2=1
+drawTodo= (i, newTodo) =>{
+    let tbody = document.querySelector('#todoAllData')  
+
+    let tr = createMyElement(tbody, 'tr')
+    tr.className ="myTr"
+    createMyElement(tr, 'td', i)
+    createMyElement(tr, 'td', newTodo.id)
+    createMyElement(tr, 'td', newTodo.title)
+    createMyElement(tr, 'td', newTodo.content)
+    createMyElement(tr, 'td', newTodo.dueDate)
+    createMyElement(tr, 'td', newTodo.important)
+    createMyElement(tr, 'td', newTodo.status)
+    createMyElement(tr, 'td', newTodo.taskType)
+    td = createMyElement(tr, 'td' )
+    delbtn = createMyElement(td, 'button', "delete")
+    delbtn.className="btn btn-danger"
+    delbtn.addEventListener('click', function(e){
+        deleteTodo(newTodo.id)
+        tr.remove()
+        
+    })
+    editbtn = createMyElement(td, 'button', 'edit')
+    editbtn.className = "btn btn-success"
+    editbtn.addEventListener('click', function(e){
+        t1=newTodo.id
+        t2=i
+        showHide.textContent='HIde form'
+        addTask.classList.remove('d-none')
+
+        AddForm.elements.title.value=newTodo.title
+        AddForm.elements.content.value=newTodo.content
+        AddForm.elements.taskType.value=newTodo.taskType
+        AddForm.elements.status.checked=newTodo.status
+        AddForm.elements.important.value=newTodo.important
+
+        AddForm.elements.dueDate.value=newTodo.dueDate
+
+        document.querySelector('#addEditBtn').textContent="edit"    
+    })
+}
+AddForm.addEventListener('submit', function(e){
+    e.preventDefault()
+    if(document.querySelector('#addEditBtn').textContent == 'add'){
+        addNewTodo(this.elements.title.value, this.elements.content.value, this.elements.dueDate.value, this.elements.status.checked, this.elements.taskType.value, this.elements.important.value)
+    } else{
+        
+        editTodo(t1, this.elements.title.value, this.elements.content.value, this.elements.dueDate.value, this.elements.status.value, this.elements.taskType.value, this.elements.important.value)
+        // let x = document.querySelectorAll('.myTr')[t2-1].querySelectorAll('td')
+        // console.log(x)
+        showHide.textContent='show form app'
+        addTask.classList.add('d-none')
+        document.querySelector('#addEditBtn').textContent = 'add'
+        //  document.querySelector('tbody').innerText=""
+        // showAllTodos()
+mySelectedTr = document.querySelectorAll('.myTr')[t2]
+
+        x =mySelectedTr.children
+        console.log(x)
+        x[2].textContent=this.elements.title.value
+        x[3].textContent=this.elements.content.value
+        x[4].textContent=this.elements.dueDate.value
+        x[5].textContent=this.elements.status.checked
+        x[6].textContent=this.elements.taskType.value
+        x[7].textContent=this.elements.important.value
+
+     }
+    this.reset()
+    //  console.log(this.elements)
+})
 
 
 //function add  new todo
-const addNewTodo =(title,content,dueDate,status,taskType,important)=>{
+const addNewTodo =(title,content,dueDate,status,important,taskType)=>{
     let newTodo ={
         id:new Date().getTime(),
         title:title,
@@ -96,14 +111,18 @@ const addNewTodo =(title,content,dueDate,status,taskType,important)=>{
     todos = getAllTodos()
     todos.push(newTodo)
     saveTodos(todos)
+    drawTodo(todos.length,newTodo)
+    showHide.textContent='show form app'
+    addTask.classList.add('d-none')
 }
 
 
 //show all todos
 const showAllTodos =()=>{
     todos =getAllTodos()
+    let tbody = document.querySelector('#todoAllData')     
+
     todos.forEach((c,i)=>{
-        console.log(`id : ${c.id} and title : ${c.content} and duedate id:${c.dueDate} and status is ${c.status} and important is :${c.important}`)
         drawTodo(i+1, c)
     })
 
@@ -121,17 +140,17 @@ const getSingleTodoIndex =(id)=>{
 }
 
 //update specific todo
-const editTodo = (id,title, content, dueDate,status,important,taskType) =>{
+const editTodo = (id,new_title,new_content,new_dueDate,new_status,new_important,new_taskType) =>{
     findedTodo = getSingleTodoIndex(id)
     
     if(findedTodo == -1 ) return console.log('todo not found')
     todos = getAllTodos()
-    todos[findedTodo].title = title
-    todos[findedTodo].content = content
-    todos[findedTodo].dueDate = dueDate
-    todos[findedTodo].status = status
-    todos[findedTodo].important = important
-    todos[findedTodo].taskType = taskType
+    todos[findedTodo].title = new_title
+    todos[findedTodo].content = new_content
+    todos[findedTodo].dueDate = new_dueDate
+    todos[findedTodo].status = new_status
+    todos[findedTodo].important = new_important
+    todos[findedTodo].taskType = new_taskType
     saveTodos(todos)
     
 }
@@ -146,16 +165,7 @@ const deleteTodo = (id) =>{
 }
 
 //  showAllTodos()
-AddForm.addEventListener('submit', function(e){
-    e.preventDefault()
-    
-    addNewTodo(this.elements.title.value, this.elements.content.value , this.elements.dueDate.value, this.elements.status.checked, this.elements.important.value, this.elements.taskType.value)
-    this.reset()
-    showHide.textContent=='show form app'? showHide.textContent='HIde form' : showHide.textContent='show form app';
-    addTask.classList.toggle('d-none')
-    
-    //  console.log(this.elements)
-})
+
 
   showAllTodos()
 
