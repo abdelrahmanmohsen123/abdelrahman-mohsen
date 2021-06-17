@@ -1,0 +1,75 @@
+{{!-- {{#each operations}}
+
+<p>amount is : </p>{{this.amount}}  ---  <p>location is : </p>{{this.location}} ----<p>date is : </p>{{this.date}} 
+- <a href="/singleOperation/{{this._id}}">single</a>
+- <a href="/editOperation/{{this._id}}">edit</a>
+
+- <a href="/deleteOperation/{{this._id}}">delete</a>
+<br>
+
+{{/each}} --}}
+
+
+{{>header}}
+<div class="container m-5">
+    <div>
+        <h2>all operations</h2>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        id
+                    </td>
+                    <td>
+                         Amount
+                    </td>
+                    <td>
+                        date
+                    </td>
+                    <td>
+                        location
+                    </td>
+                    <td>
+                        actions
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each operations}}
+                <tr>
+                      <td>
+                          {{this._id}}
+                      </td>  
+                      <td>
+                          {{this.amount}}
+                      </td> 
+                      <td>
+                          {{this.date}}
+                      </td>
+                      <td>
+                          {{this.location}}
+                      </td> 
+                       <td>
+                           - <a class="btn btn-success" href="/singleOperation/{{this._id}}">single</a>
+                            - <a class="btn btn-secondary" href="/editOperation/{{this._id}}">edit</a>
+
+                            - <a class="btn btn-danger" href="/deleteOperation/{{this._id}}">delete</a>
+                          
+                      </td> 
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <div>
+             - <a class="btn btn-primary" href="/addOperation/{{this._id}}">Add New Operation</a>
+
+        </div>
+    </div>
+
+</div>
+
+{{>footer}}
+

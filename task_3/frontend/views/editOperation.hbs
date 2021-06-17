@@ -1,0 +1,33 @@
+{{!-- <form method="POST">
+    <input  name="amount" value="{{operation.amount}}">
+    <br>
+    <input type="date" name="date" value="{{operation.date}}">
+    <br>
+        <input  type="text" name="location" value="{{operation.location}}" >
+
+    <button >add operation</button>
+</form>
+
+ --}}
+
+
+{{>header}}
+      <div class="container m-5">
+          <div>
+              <h2>Edit operation  </h2>
+          </div>
+          <form method="POST">
+                <input  name="amount"  value="{{operation.amount}}" type="number" class="form-control">
+                <br>
+                <input  name="date" value="{{operation.date}}" type="date" class="form-control">
+                <br>
+                <input  name="location" value="{{operation.location}}"  class="form-control">
+                <br>
+                <button class="btn btn-primary" >update operation</button>
+            </form>
+    <div>
+   <a class="btn btn-secondary my-5" href="/operations">back to  all operations </a>
+
+</div>
+      </div>
+  {{>footer}}

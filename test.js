@@ -1,62 +1,105 @@
-// const myhome =(city)=>{
-//     let pr =new Promise((resolve,reject)=>{
-//         setTimeout(()=>{
-//         if(city=='giza'){
-//             resolve('you live in egypt')
-//         }else{
-//             reject('i dont know')
-//         }
-//     },1500)
-// })
-// return pr
-// }
 
-// handleCity =async(city)=>{
-//     try{
-//         x= await myhome(city)
+// const va = require('validator');
+// const chalk = require('chalk');
+// const x= va.isMobilePhone('01026546598' , ['ar-EG'])
+
+
+
+// console.log(chalk.red(x));
+
+// let x="ali"
+// const yargs =require('yargs')
+// yargs.command({
+//     command:x,
+//     handler:function(){
+//         console.log('he is my fav player')
 //         console.log(x)
-//     }catch(e){
-//         console.log(e)
 //     }
-// }
+// })
+// console.log(yargs.argv)
 
-// handleCity('cairo')
+const myFunctions =require('./myMehods')
+const yargs =require('yargs')
+const { argv } = require('yargs')
 
-const getDataJson =async(cp)=>{
-    try{
-        let data =await fetch('https://api.covid19api.com/summary')
-        let y= await((data.json()))
-        
-        cp(y,false)
-    }catch(e){
-        cp(false,e)
+yargs.command({
+    command:"addTask",
+    describe:"add new task to tasks file",
+    builder:{
+        id:{ type:"integer"},
+        title:{ type:"string", demandOption:false, describe:"todo title"},
+        content:{ type:"string", demandOption:false, describe:"todo content"},
+        important:{type:"string", describe:"todo important"},
+        taskType:{type:"string"},
+        status:{type:"string"},
+        duedate:{type:"string"},
+    },
+    handler:function(argv){
+        todo={id:new Date().getTime(),
+            title: argv.title,
+             content:argv.content,
+             important: argv.important,
+             taskType:argv.taskType,
+             status: argv.status,
+             duedate:argv.duedate,
+            
+            }
+        myFunctions.addNewtodo(todo)    
     }
-}
-
-getDataJson((y,error)=>{
-    if(y){
-        Countries =y.Countries
-        console.log(Countries)
-        Countries.forEach(element => {
-          if(element.Country=='Australia') {
-              id =document.querySelector('#p1')
-              id2 =document.querySelector('#p2')
-              id3 =document.querySelector('#p3')
-              id.textContent='id :'+element.ID
-              id2.textContent='country is :' +element.Country
-              id3.textContent='total death :' +element.TotalDeaths
-            // console.log('id :'+element.ID)
-            // console.log('country is :' +element.Country)
-            // console.log( 'total death' +element.TotalDeaths)
-          
-          }
-           
-        //    console.log(element.Country)
-        //    console.log(element.Country)
-
-        });
-    }
-    
-   
-    else console.log(error)
 })
+
+
+yargs.command({
+    command:"showAll",
+    describe: "show all Tasks from tasks file",
+    handler: function(){
+        myFunctions.showAlltodos()
+    }
+})
+yargs.command({
+    command:"showsingletodo",
+    describe: "show all Tasks from tasks file",
+    builder:{
+        id:{type:"integer"}
+    },
+    handler: function(argv){
+        
+        myFunctions.showSingleTodo(argv.id)
+    }
+})
+
+yargs.command({
+    command:"delete todo",
+    describe: "show all Tasks from tasks file",
+    builder:{
+        id:{type:"integer"}
+    },
+    handler: function(argv){
+        
+        myFunctions.deletetodo(argv.id)
+    }
+})
+yargs.command({
+    command:"editTodo",
+    describe: "add New Task to tasks file",
+    builder:{
+        id:{ type:"integer", demandOption:true, describe:"task title", unique:true},
+        newTitle:{ type:"string", describe:"task title"},
+        newContent:{ type:"string", demandOption:false, describe:"task content"},
+        duedate:{ type:"string", describe:"task title"},
+        status:{ type:"string", demandOption:false, describe:"task content"},
+        important:{ type:"string", describe:"task title"},
+        taskType:{ type:"string", demandOption:false, describe:"task content"}
+  
+    },
+    handler: function(argv){
+        task = {title: argv.newTitle, content:argv.newContent,status: argv.status, important:argv.important,taskType: argv.taskType, duedate:argv.duedate}
+        myFunctions.edittodo(argv.id,todo)
+    }
+})
+yargs.parse()
+
+
+
+
+

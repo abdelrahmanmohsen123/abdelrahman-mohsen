@@ -1,0 +1,28 @@
+
+{{>header}}
+<style>
+    span{
+        color:crimson
+    }
+</style>
+
+<div  class="container m-5 card">
+     <div class="m-5" style="background-color: cyan; border:2px solid;text-align:center">
+        Show operation
+    </div>
+<div>
+<p>Amount : <span>{{operation.amount}}</span></p>
+<p>date : <span>{{operation.date}}</span> </p>
+
+<p>password :  <span>{{operation.password}}</span></p>
+
+
+
+</div>
+<div>
+   - <a class="btn btn-secondary" href="/operations">back to  all operations </a>
+
+</div>
+</div>
+
+{{>footer}}

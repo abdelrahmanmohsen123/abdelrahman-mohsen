@@ -1,0 +1,27 @@
+{{>header}}
+<style>
+    span{
+        color:crimson
+    }
+</style>
+
+<div  class="container m-5 card">
+     <div class="m-5" style="background-color: cyan; border:2px solid;text-align:center">
+        Show USER
+    </div>
+<div>
+<p>id : <span>{{user._id}}</span></p>
+<p>name : <span>{{user.username}}</span> </p>
+
+<p>password :  <span>{{user.password}}</span></p>
+
+
+
+</div>
+<div>
+   - <a class="btn btn-secondary" href="/">back to  all users </a>
+
+</div>
+</div>
+
+{{>footer}}

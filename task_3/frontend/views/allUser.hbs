@@ -1,0 +1,57 @@
+{{>header}}
+<div class="container m-5">
+    <div>
+        <h2>all users</h2>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>
+                        id
+                    </td>
+                    <td>
+                         name
+                    </td>
+                    <td>
+                        password
+                    </td>
+                    <td>
+                        actions
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                <tr>
+                      <td>
+                          {{this._id}}
+                      </td>  
+                      <td>
+                          {{this.username}}
+                      </td> 
+                      <td>
+                          {{this.password}}
+                      </td> 
+                       <td>
+                           - <a class="btn btn-success" href="/single/{{this._id}}">single</a>
+                            - <a class="btn btn-secondary" href="/edit/{{this._id}}">edit</a>
+
+                            - <a class="btn btn-danger" href="/delete/{{this._id}}">delete</a>
+                          
+                      </td> 
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <div>
+             - <a class="btn btn-primary" href="/addUser/{{this._id}}">Add New User</a>
+
+        </div>
+    </div>
+
+</div>
+
+{{>footer}}
+

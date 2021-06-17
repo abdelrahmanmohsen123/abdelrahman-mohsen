@@ -1,0 +1,20 @@
+
+
+{{>header}}
+      <div class="container m-5">
+          <div>
+              <h2>Edit user  </h2>
+          </div>
+          <form method="POST">
+                <input  name="username" value="{{user.username}}" class="form-control">
+                <br>
+                <input  name="password" value="{{user.password}}" class="form-control">
+                <br>
+                <button class="btn btn-primary" >update user</button>
+            </form>
+    <div>
+   <a class="btn btn-secondary my-5" href="/">back to  all users </a>
+
+</div>
+      </div>
+  {{>footer}}
